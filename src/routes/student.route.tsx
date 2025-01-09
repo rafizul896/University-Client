@@ -3,14 +3,14 @@ import CreateAdmin from "../pages/admin/CreateAdmin";
 import CreateFaculty from "../pages/admin/CreateFaculty";
 import CreateStudent from "../pages/admin/CreateStudent";
 
-export const adminPaths = [
+export const studentPaths = [
   {
     name: "Dashboard",
     path: "dashboard",
     element: <AdminDashboard />,
   },
   {
-    name: "User Management",
+    name: "Student",
     children: [
       {
         name: "Create Admin",
