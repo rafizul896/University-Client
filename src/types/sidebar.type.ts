@@ -13,7 +13,7 @@ export type TUserPath = {
 };
 
 export type TSidebarItem = {
-    key: string;
-    label: ReactNode;
-    children?: TSidebarItem[];
-  };
+  key: string;
+  label: ReactNode;
+  children?: TSidebarItem[];
+};
