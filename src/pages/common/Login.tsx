@@ -44,12 +44,8 @@ const Login = () => {
       className="flex flex-col justify-center items-center min-h-screen"
     >
       <div>
-        <label htmlFor="id">UserId : </label>
-        <PHInput type="text" name="id" />
-      </div>
-      <div>
-        <label htmlFor="password">Password : </label>
-        <PHInput type="text" name="password" />
+        <PHInput type="text" name="id" label="UserId" />
+        <PHInput type="text" name="password" label="Password" />
       </div>
 
       <Button htmlType="submit">Login</Button>
