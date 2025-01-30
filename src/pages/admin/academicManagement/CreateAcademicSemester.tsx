@@ -11,6 +11,8 @@ const CreateAcademicSemester = () => {
   return (
     <PHForm onSubmit={onSubmit}>
       <PHInput type="text" name="name" />
+      <PHInput type="text" name="name" />
+      <PHInput type="text" name="name" />
       <Button htmlType="submit">Submit</Button>
     </PHForm>
   );
