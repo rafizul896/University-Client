@@ -3,22 +3,27 @@ import PHSelect from "@/components/form/PHSelect";
 import { Button, Col, Flex } from "antd";
 import { FieldValues } from "react-hook-form";
 
+const nameOptions = [
+  { value: "01", label: "Autumn" },
+  { value: "02", label: "Summer" },
+  { value: "03", label: "Fall" },
+];
+
 const CreateAcademicSemester = () => {
   const onSubmit = (data: FieldValues) => {
-    console.log(data);
+    const name = nameOptions[Number(data.name)-1].label;
+    const semesterData = {
+      name,
+      code: data?.name,
+    };
+    console.log(semesterData);
   };
-
-  const nameOptions = [
-    { value: "Auton", label: "Auton" },
-    { value: "Summer", label: "Summer" },
-    { value: "Fall", label: "Fall" },
-  ];
 
   return (
     <Flex justify="center" align="center">
       <Col span="6">
         <PHForm onSubmit={onSubmit}>
-          <PHSelect name="Name" label="Name" options={nameOptions} />
+          <PHSelect name="name" label="Name" options={nameOptions} />
           <Button htmlType="submit">Submit</Button>
         </PHForm>
       </Col>
