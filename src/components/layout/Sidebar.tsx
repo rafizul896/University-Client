@@ -32,9 +32,10 @@ const Sidebar = () => {
     default:
       break;
   }
-  
+
   return (
     <Sider
+      style={{ height: "100vh", position: "sticky", top: "0", left: "0" }}
       breakpoint="lg"
       collapsedWidth="0"
       onBreakpoint={(broken) => {
