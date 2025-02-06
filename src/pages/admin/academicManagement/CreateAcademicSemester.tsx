@@ -6,6 +6,8 @@ import { Button, Col, Flex } from "antd";
 import { FieldValues } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { academicSemesterSchema } from "@/schemas/academicManagement.schema";
+import { useAddAcademicSemesterMutation } from "@/redux/features/admin/academicManagement.api";
+import { toast } from "sonner";
 
 const currentYear = new Date().getFullYear();
 const yearOptions = [0, 1, 2, 3, 4].map((number) => ({
@@ -14,7 +16,9 @@ const yearOptions = [0, 1, 2, 3, 4].map((number) => ({
 }));
 
 const CreateAcademicSemester = () => {
-  const onSubmit = (data: FieldValues) => {
+  const [addAcademicSemester] = useAddAcademicSemesterMutation();
+
+  const onSubmit = async (data: FieldValues) => {
     const name = nameOptions[Number(data?.name) - 1]?.label;
     const semesterData = {
       name,
@@ -23,7 +27,15 @@ const CreateAcademicSemester = () => {
       startMonth: data?.startMonth,
       endMonth: data?.endMonth,
     };
-    console.log(semesterData);
+
+    try {
+      console.log(semesterData)
+      const res = await addAcademicSemester(semesterData);
+      console.log(res);
+    } catch (err) {
+        toast.error(err?.message);
+      
+    }
   };
 
   return (
