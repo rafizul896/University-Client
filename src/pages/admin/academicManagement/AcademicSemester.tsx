@@ -12,7 +12,7 @@ interface DataType {
 
 const AcademicSemester = () => {
   const { data: semesterData } = useGetAllSemestersQuery(undefined);
-console.log(semesterData)
+
   const tabelData = semesterData?.data?.map(
     ({ _id, name, year, startMonth, endMonth }) => ({
       _id,
@@ -22,6 +22,7 @@ console.log(semesterData)
       endMonth,
     })
   );
+  
   const columns: TableColumnsType<DataType> = [
     {
       title: "Name",

@@ -1,4 +1,5 @@
 import { baseApi } from "@/redux/api/baseApi";
+import { TResponseRedux } from "@/types/global";
 
 const academicManagementApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -7,7 +8,7 @@ const academicManagementApi = baseApi.injectEndpoints({
         url: "/academic-semesters",
         method: "GET",
       }),
-      transformResponse: (responce) => {
+      transformResponse: (responce: TResponseRedux) => {
         return { data: responce.data, meta: responce.meta };
       },
     }),
