@@ -9,6 +9,8 @@ import {
 } from "@/redux/features/admin/academicManagement.api";
 import { useAddAStudentMutation } from "@/redux/features/admin/userManagement.api";
 import { createStudentValidationSchema } from "@/schemas/userManagement.schema";
+import { TResponse } from "@/types";
+import { TStudent } from "@/types/userManagement.type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Col, Divider, Form, Input, Row } from "antd";
 import { Controller, FieldValues } from "react-hook-form";
@@ -76,7 +78,7 @@ const CreateStudent = () => {
     // console.log(Object.fromEntries(formData));
 
     try {
-      const res = await createStudent(formData);
+      const res = (await createStudent(formData)) as TResponse<TStudent>;
       if (res.error) {
         toast.error(res.error.data.message, { id: toastId });
       } else {
@@ -94,7 +96,7 @@ const CreateStudent = () => {
       <Col span={24}>
         <PHForm
           onSubmit={onSubmit}
-          // defaultValues={defaultValue}
+          defaultValues={defaultValue}
           resolver={zodResolver(createStudentValidationSchema)}
         >
           <Divider>Personal Information</Divider>
