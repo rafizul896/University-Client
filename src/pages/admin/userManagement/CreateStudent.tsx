@@ -8,6 +8,8 @@ import {
   useGetAllSemestersQuery,
 } from "@/redux/features/admin/academicManagement.api";
 import { useAddAStudentMutation } from "@/redux/features/admin/userManagement.api";
+import { createStudentValidationSchema } from "@/schemas/userManagement.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Col, Divider, Form, Input, Row } from "antd";
 import { Controller, FieldValues } from "react-hook-form";
 import { toast } from "sonner";
@@ -90,7 +92,11 @@ const CreateStudent = () => {
   return (
     <Row>
       <Col span={24}>
-        <PHForm onSubmit={onSubmit} defaultValues={defaultValue}>
+        <PHForm
+          onSubmit={onSubmit}
+          // defaultValues={defaultValue}
+          resolver={zodResolver(createStudentValidationSchema)}
+        >
           <Divider>Personal Information</Divider>
           <Row gutter={8}>
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
