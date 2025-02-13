@@ -1,19 +1,27 @@
-import { Button, Space, Table } from "antd";
+import { Button, Pagination, Space, Table } from "antd";
 import type { TableColumnsType, TableProps } from "antd";
 import { useState } from "react";
 import { TQueryParam, TStudent } from "@/types";
 import { useGetAllStudentsQuery } from "@/redux/features/admin/userManagement.api";
+import { Link } from "react-router-dom";
 
-export type TTableData = Pick<TStudent, "fullName" | "id">;
+export type TTableData = Pick<TStudent, "fullName" | "id" | "email">;
 
 const StudentData = () => {
-  const [params, setParams] = useState<TQueryParam[] | undefined>(undefined);
-  const { data: studentData, isFetching } = useGetAllStudentsQuery(params);
+  const [page, setPage] = useState(1);
+  const [params, setParams] = useState<TQueryParam[]>([]);
+  const { data: studentData, isFetching } = useGetAllStudentsQuery([
+    { name: "page", value: page },
+    { name: "sort", value: "id" },
+    ...params,
+  ]);
+  const metaData = studentData?.meta;
 
-  const tabelData = studentData?.data?.map(({ _id, fullName, id }) => ({
+  const tabelData = studentData?.data?.map(({ _id, fullName, id, email }) => ({
     key: _id,
     id,
     fullName,
+    email,
   }));
 
   const columns: TableColumnsType<TTableData> = [
@@ -29,13 +37,21 @@ const StudentData = () => {
       dataIndex: "id",
     },
     {
+      title: "Email",
+      key: "email",
+      dataIndex: "email",
+    },
+    {
       title: "Action",
       align: "center",
       key: "x",
-      render: () => {
+      render: (item) => {
+        console.log(item)
         return (
           <Space>
+            <Link to={`/admin/student-data/${item.key}`}>
             <Button>Details</Button>
+            </Link>
             <Button>Update</Button>
             <Button>Block</Button>
           </Space>
@@ -68,13 +84,24 @@ const StudentData = () => {
   };
 
   return (
-    <Table<TTableData>
-      loading={isFetching}
-      columns={columns}
-      dataSource={tabelData}
-      onChange={onChange}
-      showSorterTooltip={{ target: "sorter-icon" }}
-    />
+    <>
+      <Table<TTableData>
+        loading={isFetching}
+        columns={columns}
+        dataSource={tabelData}
+        onChange={onChange}
+        showSorterTooltip={{ target: "sorter-icon" }}
+        pagination={false}
+      />
+      <Pagination
+        align="end"
+        current={page}
+        onChange={(value) => setPage(value)}
+        pageSize={metaData?.limit}
+        total={metaData?.total}
+        style={{ marginTop: "8px" }}
+      />
+    </>
   );
 };
 
