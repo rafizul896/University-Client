@@ -1,9 +1,7 @@
 const StudentDetails = () => {
-    return (
-        <div>
-            StudentDetails
-        </div>
-    );
+//   const { studentId } = useParams();
+
+  return <div>StudentDetails</div>;
 };
 
 export default StudentDetails;
