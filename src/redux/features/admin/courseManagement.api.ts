@@ -1,5 +1,5 @@
 import { baseApi } from "@/redux/api/baseApi";
-import {  TResponseRedux, TSemester } from "@/types";
+import { TResponseRedux, TSemester } from "@/types";
 
 const courseManagementApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -9,6 +9,7 @@ const courseManagementApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["semester"],
     }),
     getAllRegisteredSemester: builder.query({
       query: () => ({
@@ -21,6 +22,15 @@ const courseManagementApi = baseApi.injectEndpoints({
           meta: responce.meta,
         };
       },
+      providesTags: ["semester"],
+    }),
+    updateRegisteredSemester: builder.mutation({
+      query: (args) => ({
+        url: `/semester-registrations/${args.id}`,
+        method: "PATCH",
+        body: args.data,
+      }),
+      invalidatesTags: ["semester"],
     }),
   }),
 });
@@ -28,4 +38,5 @@ const courseManagementApi = baseApi.injectEndpoints({
 export const {
   useAddRegisteredSemesterMutation,
   useGetAllRegisteredSemesterQuery,
+  useUpdateRegisteredSemesterMutation,
 } = courseManagementApi;
