@@ -65,7 +65,7 @@ const OfferCourse = () => {
     label: item.title,
   }));
 
-  const facultiesOptions = facultiesData?.data?.faculties?.map((item:any) => ({
+  const facultiesOptions = facultiesData?.data?.faculties?.map((item: any) => ({
     value: item._id,
     label: item.fullName,
   }));
@@ -80,8 +80,6 @@ const OfferCourse = () => {
       startTime: moment(new Date(data.startTime)).format("HH:mm"),
       endTime: moment(new Date(data.endTime)).format("HH:mm"),
     };
-
-    console.log(offeredCourseData);
 
     try {
       const res = (await addOfferedCourse(offeredCourseData)) as TResponse<any>;
