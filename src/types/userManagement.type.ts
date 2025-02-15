@@ -79,5 +79,5 @@ export type TFaculty = {
   academicDepartment: string;
   academicFaculty: string;
   isDeleted: boolean;
-  fullName?: string
+  fullName: string
 };

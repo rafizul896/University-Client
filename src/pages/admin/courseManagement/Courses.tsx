@@ -8,11 +8,10 @@ import { useGetAllFacultiesQuery } from "@/redux/features/admin/userManagement.a
 import { TCourse, TResponse } from "@/types";
 import { Button, Modal, Table } from "antd";
 import { useState } from "react";
+import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
 const Courses = () => {
-  // const [params, setParams] = useState<TQueryParam[] | undefined>(undefined);
-
   const { data: courses, isFetching } = useGetAllCoursesQuery(undefined);
 
   const tableData = courses?.data?.map(({ _id, title, prefix, code }) => ({
@@ -35,7 +34,7 @@ const Courses = () => {
     {
       title: "Action",
       key: "x",
-      render: (item: Partial<TCourse>) => {
+      render: (item: any) => {
         return <AddFacultyModal courseData={item} />;
       },
     },
@@ -46,7 +45,7 @@ const Courses = () => {
   );
 };
 
-const AddFacultyModal = ({ courseData }) => {
+const AddFacultyModal = ({ courseData }: any) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data: facultiesData } = useGetAllFacultiesQuery(undefined);
   const [addFaculties] = useAddFacultiesMutation();
@@ -64,11 +63,11 @@ const AddFacultyModal = ({ courseData }) => {
     label: item?.fullName,
   }));
 
-  const handleSubmit = async (data) => {
+  const handleSubmit = async (data: FieldValues) => {
     const toastId = toast.loading("Creating..!");
 
     const facultyData = {
-      courseId: courseData.key,
+      courseId: courseData,
       data,
     };
 
