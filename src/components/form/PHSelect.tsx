@@ -6,15 +6,21 @@ type TSelectProps = {
   label?: string;
   options: { value: string; label: string; disabled?: boolean }[] | undefined;
   disabled?: boolean;
+  mode?: "multiple";
 };
 
-const PHSelect = ({ name, label, options, disabled }: TSelectProps) => {
+const PHSelect = ({ name, label, options, disabled, mode }: TSelectProps) => {
   return (
     <Controller
       name={name}
       render={({ field, fieldState: { error } }) => (
         <Form.Item label={label}>
-          <Select {...field} options={options} disabled={disabled} />
+          <Select
+            mode={mode}
+            {...field}
+            options={options}
+            disabled={disabled}
+          />
           {error && <small className="text-rose-500">{error?.message}</small>}
         </Form.Item>
       )}
