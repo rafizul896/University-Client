@@ -21,11 +21,16 @@ const Login = () => {
     const toastId = toast.loading("Logging in");
     try {
       const res = await login(data).unwrap();
+
       const user = verifyToken(res.data.accessToken) as TUser;
       dispatch(setUser({ user, token: res.data.accessToken }));
-
       toast.success("Logged In", { id: toastId, duration: 2000 });
-      navigate(`/${user?.role}/dashboard`);
+
+      if (res?.data?.needsPasswordChange === true) {
+        navigate(`/change-password`);
+      } else {
+        navigate(`/${user?.role}/dashboard`);
+      }
     } catch (err) {
       if (err instanceof Error) {
         toast.error(err?.message || "Something went wrong!", {
@@ -38,7 +43,7 @@ const Login = () => {
 
   return (
     <Row justify="center" align="middle" style={{ height: "100vh" }}>
-      <PHForm onSubmit={onSubmit} defaultValues={defaultValues} >
+      <PHForm onSubmit={onSubmit} defaultValues={defaultValues}>
         <PHInput type="text" name="id" label="UserId" />
         <PHInput type="text" name="password" label="Password" />
         <Button htmlType="submit">Login</Button>
